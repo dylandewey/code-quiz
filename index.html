@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <a class="navbar-brand" href="#leaderboard">Leaderboard</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Time:  <span class="timer">(current)</span></a>
+          <a class="nav-item nav-link active start">Time: <span class="timer">45 seconds</span></a>
         </div>
       </div>
     </nav>
@@ -32,6 +32,17 @@
         <hr class="my-4">
         <p>Click start to begin the quiz.  Goodluck!!!</p>
         <a class="btn btn-primary btn-lg" href="#" role="button">Start</a>
+      </div>
+
+      <div class="carouselbox" aria-role="img" aria-label="carousel">
+        <div class="buttons">
+          <button class="prev">
+            ◀ Previous
+          </button>
+          <button class="next">
+            Next ▶ 
+          </button>
+        </div>
       </div>
 
       <div id="quiz"></div>

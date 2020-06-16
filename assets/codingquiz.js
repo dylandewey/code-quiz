@@ -1,3 +1,18 @@
+let startQuizBtn = document.querySelector('.btn');
+let timer = document.querySelector('.timer');
+
+startQuizBtn.addEventListener('click', startTimer);
+let secondLeft = 46;
+function startTimer() {
+    let timerInterval = setInterval(function() {
+        secondsLeft -- ;
+        timer.textContent = 'Time: ' + secondsLeft + ' seconds';
+
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000;
+}
 
 
 let myQuestions = [
@@ -73,6 +88,6 @@ fuction generateQuiz(questions, quizContainer, resultsConstainer, submitButton) 
 
     // when user clicks submit, show results
     submitButton.onclick = function() {
-        showResults(questions, quizConainer, resultsContainer);
+        showResults(questions, quizContainer, resultsContainer);
     }
 }
