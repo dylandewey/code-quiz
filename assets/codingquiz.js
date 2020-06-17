@@ -1,88 +1,9 @@
-let pos = 0;
-let correct = 0;
-let test, test_status, question, choice, choices, chA, chB, chC, chD;
-
 let startQuizBtn = document.querySelector('.btn');
 let timer = document.querySelector('.timer');
 let totalSeconds = 0;
-
-function get(x) {
-    return document.getElementById(x);
-}
-
-function renderQuestion() {
-    test = get('test');
-    if (pos >= questions.length) {
-        test.innerHTML = "<h2>You got '+correct+' of '+question.length+'' questions correct</h2>";
-        get ('test_status').innerHTML = 'Test Completed';
-        pos = 0;
-        correct = 0;
-        return false;
-    }
-
-    get('test_status').innerHTML = 'Question ' +(pos+1)+' of '+questions.length;
-
-    question = questions [pos].question;
-    chA = questions[pos].a;
-    chB = questions [pos].b;
-    chC = questions [pos].c;
-    chD = questions [pos].d;
-
-    test.innerHTML = '<h3>' +question+ '</h3>';
-
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "D"> '+chD+'</label><br><br>';
-    test.innerHTML += '<button onclick = "checkAnswer()"> Submit Answer</button>';
-}
-
-    function checkAnswer() {
-        choices = document.getElementsByName('choices');
-        for (var i=0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                choice - choices[i].nodeValue;
-            }
-        }
-        if (choice == questions[pos].answer) {
-            correct++;
-        }
-        pos++;
-
-        renderQuestion();
-    }
-
-
-
-function getFormattedSeconds() {
-    let secondsLeft = (totalSeconds - secondsElapsed) %60;
-
-    let formattedSeconds;
-
-    if (secondsLeft < 10) {
-        formattedSeconds = '0' + secondsLeft;
-    }else {
-        formattedSeconds = secondsLeft;
-    }
-
-    return formattedSeconds;
-}
-function renderTime() {
-    secondsDisplay.textContent = getFormattedSeconds();
-}
-startQuizBtn.addEventListener('click', startTimer);
-let secondsLeft = 46;
-function startTimer() {
-    let timerInterval = setInterval(function() {
-        secondsLeft -- ;
-        timer.textContent = 'Time: ' + secondsLeft + ' seconds';
-
-        if (secondsLeft === 0) {
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-};
-
+let pos = 0;
+let correct = 0;
+let test, test_status, question, choice, choices, chA, chB, chC, chD;
 
 let myQuestions = [
     {
@@ -130,4 +51,86 @@ let myQuestions = [
     }
 ];
 
+function get(x) {
+    return document.getElementById(x);
+}
 
+function renderQuestion() {
+    test = get('test');
+    if (pos >= questions.length) {
+        test.innerHTML = '<h2>You got ' + correct + ' of ' + questions.length + 'questions correct</h2>';
+        get('test_status').innerHTML = 'Test Completed';
+        pos = 0;
+        correct = 0;
+        return false;
+    }
+
+    get('test_status').innerHTML = 'Question ' +(pos+1)+' of '+questions.length;
+
+    question = questions [pos].question;
+    chA = questions[pos].a;
+    chB = questions [pos].b;
+    chC = questions [pos].c;
+    chD = questions [pos].d;
+
+    test.innerHTML = '<h3>' +question+ '</h3>';
+
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "D"> '+chD+'</label><br><br>';
+    test.innerHTML += '<button onclick = "checkAnswer()"> Submit Answer</button>';
+}
+
+    function checkAnswer() {
+        choices = document.getElementsByName('choices');
+        for (var i=0; i < choices.length; i++) {
+            if (choices[i].checked) {
+                choice - choices[i].nodeValue;
+            }
+        }
+        if (choice == questions[pos].answer) {
+            correct++;
+        }
+        pos++;
+
+        renderQuestion();
+    }
+
+
+    
+
+function getFormattedSeconds() {
+    let secondsLeft = (totalSeconds - secondsElapsed) %60;
+
+    let formattedSeconds;
+
+    if (secondsLeft < 10) {
+        formattedSeconds = '0' + secondsLeft;
+    }else {
+        formattedSeconds = secondsLeft;
+    }
+
+    return formattedSeconds;
+}
+function renderTime() {
+    secondsDisplay.textContent = getFormattedSeconds();
+}
+
+let secondsLeft = 46;
+function startTimer() {
+    let timerInterval = setInterval(function() {
+        secondsLeft -- ;
+        timer.textContent =  secondsLeft + ' seconds';
+
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+};
+
+
+
+
+startQuizBtn.addEventListener('click', startTimer);
+startQuizBtn.addEventListener('click', renderQuestion);
