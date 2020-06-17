@@ -37,20 +37,33 @@ function renderQuestion() {
     test.innerHTML += '<button onclick = "checkAnswer()"> Submit Answer</button>';
 }
 
-    function checkAnswer()
+    function checkAnswer() {
+        choices = document.getElementsByName('choices');
+        for (var i=0; i < choices.length; i++) {
+            if (choices[i].checked) {
+                choice - choices[i].nodeValue;
+            }
+        }
+        if (choice == questions[pos].answer) {
+            correct++;
+        }
+        pos++;
+
+        renderQuestion();
+    }
 
 
 
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) %60;
 
-    // let formattedSeconds;
+    let formattedSeconds;
 
-    // if (secondsLeft < 10) {
-    //     formattedSeconds = '0' + secondsLeft;
-    // }else {
-    //     formattedSeconds = secondsLeft;
-    // }
+    if (secondsLeft < 10) {
+        formattedSeconds = '0' + secondsLeft;
+    }else {
+        formattedSeconds = secondsLeft;
+    }
 
     return formattedSeconds;
 }
@@ -117,36 +130,4 @@ let myQuestions = [
     }
 ];
 
-function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
-    
-    function showQuestions(questions, quizContainer) {
-        let output = [];
-        let answers;
 
-        for(let i=0; i<questions.length; i++) {
-            answers = [];
-
-            for(letter in questions[i].answers){
-                answers.push(
-                    '<label>'
-                        + '<input type="radio" name="question'+i+'" value="'+letter+'">'
-                        + leter + ': '
-                        +questions[i].answers[letter]
-                    + '</label>'
-                );
-            }
-        }
-    }
-
-    function showResults(question, quizContainer, resultsContainer) {
-        //code will go here
-    }
-
-    //show the questions
-    showQuestions(questions, quizContainer) 
-
-    // when user clicks submit, show results
-    submitButton.onclick = function() {
-        showResults(questions, quizContainer, resultsContainer);
-    }
-}
