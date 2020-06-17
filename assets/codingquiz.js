@@ -9,16 +9,48 @@ let totalSeconds = 0;
 function get(x) {
     return document.getElementById(x);
 }
+
+function renderQuestion() {
+    test = get('test');
+    if (pos >= questions.length) {
+        test.innerText = "<h2>You got '+correct+' of '+question.length+'' questions correct</h2>";
+        get ('test_status').innerText = 'Test Completed';
+        pos = 0;
+        correct = 0;
+        return false;
+    }
+
+    get('test_status').innerText = 'Question ' +(pos+1)+' of '+questions.length;
+
+    question = questions [pos].question;
+    chA = questions[pos].a;
+    chB = questions [pos].b;
+    chC = questions [pos].c;
+    chD = questions [pos].d;
+
+    test.innerText = '<h3>' +question+ '</h3>';
+
+    test.innerText += '<label> <input> type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
+    test.innerText += '<label> <input> type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
+    test.innerText += '<label> <input> type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
+    test.innerText += '<label> <input> type = "block" name = "choices" value = "D"> '+chD+'</label><br>';
+    test.innerText += '<button onclick = "checkAnswer()"> Submit Answer</button>';
+
+
+
+
+
+}
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) %60;
 
-    let formattedSeconds;
+    // let formattedSeconds;
 
-    if (secondsLeft < 10) {
-        formattedSeconds = '0' + secondsLeft;
-    }else {
-        formattedSeconds = secondsLeft;
-    }
+    // if (secondsLeft < 10) {
+    //     formattedSeconds = '0' + secondsLeft;
+    // }else {
+    //     formattedSeconds = secondsLeft;
+    // }
 
     return formattedSeconds;
 }
