@@ -13,14 +13,14 @@ function get(x) {
 function renderQuestion() {
     test = get('test');
     if (pos >= questions.length) {
-        test.innerText = "<h2>You got '+correct+' of '+question.length+'' questions correct</h2>";
-        get ('test_status').innerText = 'Test Completed';
+        test.innerHTML = "<h2>You got '+correct+' of '+question.length+'' questions correct</h2>";
+        get ('test_status').innerHTML = 'Test Completed';
         pos = 0;
         correct = 0;
         return false;
     }
 
-    get('test_status').innerText = 'Question ' +(pos+1)+' of '+questions.length;
+    get('test_status').innerHTML = 'Question ' +(pos+1)+' of '+questions.length;
 
     question = questions [pos].question;
     chA = questions[pos].a;
@@ -28,19 +28,19 @@ function renderQuestion() {
     chC = questions [pos].c;
     chD = questions [pos].d;
 
-    test.innerText = '<h3>' +question+ '</h3>';
+    test.innerHTML = '<h3>' +question+ '</h3>';
 
-    test.innerText += '<label> <input> type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
-    test.innerText += '<label> <input> type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
-    test.innerText += '<label> <input> type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
-    test.innerText += '<label> <input> type = "block" name = "choices" value = "D"> '+chD+'</label><br>';
-    test.innerText += '<button onclick = "checkAnswer()"> Submit Answer</button>';
-
-
-
-
-
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
+    test.innerHTML += '<label> <input type = "block" name = "choices" value = "D"> '+chD+'</label><br><br>';
+    test.innerHTML += '<button onclick = "checkAnswer()"> Submit Answer</button>';
 }
+
+    function checkAnswer()
+
+
+
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) %60;
 
