@@ -4,6 +4,8 @@ let totalSeconds = 0;
 let pos = 0;
 let correct = 0;
 let test, test_status, question, choice, choices, chA, chB, chC, chD;
+let secondsLeft = 46;
+let leaderboard = document.querySelector('.leaderboard')
 
 let myQuestions = [
     {
@@ -51,55 +53,6 @@ let myQuestions = [
     }
 ];
 
-function get(x) {
-    return document.getElementById(x);
-}
-
-function renderQuestion() {
-    test = get('test');
-    if (pos >= questions.length) {
-        test.innerHTML = '<h2>You got ' + correct + ' of ' + questions.length + 'questions correct</h2>';
-        get('test_status').innerHTML = 'Test Completed';
-        pos = 0;
-        correct = 0;
-        return false;
-    }
-
-    get('test_status').innerHTML = 'Question ' +(pos+1)+' of '+questions.length;
-
-    question = questions [pos].question;
-    chA = questions[pos].a;
-    chB = questions [pos].b;
-    chC = questions [pos].c;
-    chD = questions [pos].d;
-
-    test.innerHTML = '<h3>' +question+ '</h3>';
-
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "A"> '+chA+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "B"> '+chB+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "C"> '+chC+'</label><br>';
-    test.innerHTML += '<label> <input type = "block" name = "choices" value = "D"> '+chD+'</label><br><br>';
-    test.innerHTML += '<button onclick = "checkAnswer()"> Submit Answer</button>';
-}
-
-    function checkAnswer() {
-        choices = document.getElementsByName('choices');
-        for (var i=0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                choice - choices[i].nodeValue;
-            }
-        }
-        if (choice == questions[pos].answer) {
-            correct++;
-        }
-        pos++;
-
-        renderQuestion();
-    }
-
-
-    
-
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) %60;
 
@@ -117,7 +70,7 @@ function renderTime() {
     secondsDisplay.textContent = getFormattedSeconds();
 }
 
-let secondsLeft = 46;
+
 function startTimer() {
     let timerInterval = setInterval(function() {
         secondsLeft -- ;
@@ -128,9 +81,77 @@ function startTimer() {
         }
     }, 1000);
 };
-
-
-
-
 startQuizBtn.addEventListener('click', startTimer);
 startQuizBtn.addEventListener('click', renderQuestion);
+startQuizBtn.addEventListener('click', function() {
+    document.querySelector('.jumbotron').style.display = "none";
+})
+
+function get(x) {
+    return document.getElementById(x);
+}
+
+function renderQuestion() {
+    test = get('test');
+    if (pos >= myQuestions.length) {
+        test.innerHTML = '<h2>You got ' + correct + ' of ' + myQuestions.length + 'questions correct</h2>';
+        get('test_status').innerHTML = 'Test Completed';
+        pos = 0;
+        correct = 0;
+        return false;
+    }
+
+    get('test_status').innerHTML = 'Question ' + (pos+1) +' of ' + myQuestions.length;
+
+    question = myQuestions [pos].question;
+    chA = myQuestions [pos].a;
+    chB = myQuestions [pos].b;
+    chC = myQuestions [pos].c;
+    chD = myQuestions [pos].d;
+
+    test.innerHTML = '<h3>' + question + '</h3>';
+
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "A"> '+ chA +'</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "B"> '+ chB +'</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "C"> '+ chC +'</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "D"> '+ chD +'</label><br><br>';
+    test.innerHTML += '<button onclick = "checkAnswer()" >Submit Answer</button>';
+}
+
+    function checkAnswer() {
+        choices = document.getElementsByName('choices');
+        for (var i=0; i < choices.length; i++) {
+            if (choices[i].checked) {
+                choice = choices[i].value;
+            }
+        }
+        if (choice == myQuestions[pos].answer) {
+            correct++;
+        }
+        pos++;
+
+        renderQuestion();
+    }
+
+    leaderboard.addEventListener("click", function(){
+        //stop timer if goes to highscore panel
+        clearInterval(timerInterval);
+        //hide all other pages and show highscore panel
+        document.querySelector(".jumbotron").style.display = "none";
+        quizSection.style.display = "none";
+        initialsSection.style.display = "none";
+        highscoreSection.style.display = "block";
+        //reset previous content on highscore panel and loop through local storage to push all keys and values onto html
+        document.querySelector(".user-scores").textContent = " ";
+        for (let i = 0; i< localStorage.length; i++) {
+            var p = document.createElement("p");
+            var user = localStorage.key(i);
+            var scores = localStorage.getItem(localStorage.key(i));
+            p.textContent = user + ": " + scores;
+            document.querySelector(".user-scores").appendChild(p);}
+        })
+
+
+
+
+
