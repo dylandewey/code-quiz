@@ -1,11 +1,18 @@
-.start { 
+.navbar {
     text-align: right;
 }
 
 .jumbotron {
     text-align: center;
+    background-color: deepskyblue;
 }
 
-.test {
+#test {
+    text-align: center;
+    background-color: darkorange;
+}
+
+#test_status {
     text-align: center;
 }
+

@@ -6,7 +6,7 @@ let correct = 0;
 let test, test_status, question, choice, choices, chA, chB, chC, chD;
 let secondsLeft = 46;
 let leaderboard = document.querySelector('.leaderboard')
-
+let tryAgain = document.querySelector('.again');
 let myQuestions = [
     {
         question: 'In which HTML element do we put the JavaScript?',
@@ -78,6 +78,7 @@ function startTimer() {
 
         if (secondsLeft === 0) {
             clearInterval(timerInterval);
+            test.innerHTML = '<h1> Sorry, you ran out of time';
         }
     }, 1000);
 };
@@ -129,7 +130,7 @@ function renderQuestion() {
         }
         if (choice == myQuestions[pos].correctAnswer) {
             correct++;
-        }
+        }   
         pos++;
 
         renderQuestion();
