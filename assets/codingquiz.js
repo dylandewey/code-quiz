@@ -43,7 +43,7 @@ let myQuestions = [
     
     {
         question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
-        answer: {
+        answers: {
             a: '<script href="xxx.js">',
             b: '<script name="xxx.js">',
             c: '<script src="xxx.js">',
@@ -104,10 +104,12 @@ function renderQuestion() {
     get('test_status').innerHTML = 'Question ' + (pos+1) +' of ' + myQuestions.length;
 
     question = myQuestions [pos].question;
-    chA = myQuestions [pos].a;
+    chA = myQuestions [pos].answers;
     chB = myQuestions [pos].b;
     chC = myQuestions [pos].c;
     chD = myQuestions [pos].d;
+    
+    //JSON.stringify(answers);
 
     test.innerHTML = '<h3>' + question + '</h3>';
 
@@ -125,7 +127,7 @@ function renderQuestion() {
                 choice = choices[i].value;
             }
         }
-        if (choice == myQuestions[pos].answer) {
+        if (choice == myQuestions[pos].correctAnswer) {
             correct++;
         }
         pos++;
@@ -138,10 +140,7 @@ function renderQuestion() {
         clearInterval(timerInterval);
         //hide all other pages and show highscore panel
         document.querySelector(".jumbotron").style.display = "none";
-        quizSection.style.display = "none";
-        initialsSection.style.display = "none";
-        highscoreSection.style.display = "block";
-        //reset previous content on highscore panel and loop through local storage to push all keys and values onto html
+    
         document.querySelector(".user-scores").textContent = " ";
         for (let i = 0; i< localStorage.length; i++) {
             var p = document.createElement("p");
