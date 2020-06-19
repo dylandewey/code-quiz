@@ -4,11 +4,13 @@ let totalSeconds = 0;
 let pos = 0;
 let correct = 0;
 let test, test_status, question, choice, choices, chA, chB, chC, chD;
-let secondsLeft = 46;
-let leaderboard = document.querySelector('.leaderboard')
+let secondsLeft = 45;
+let leaderboard = document.querySelector('leaderboard.html')
 let highscore = 0;
-let highScoreArray = []
+let highScoreArray = [];
 let tryAgain = document.querySelector('.again');
+let submitButton = document.querySelector('.submit');
+let recordInitials = document.querySelector('.record-initials');
 let myQuestions = [
     {
         question: 'In which HTML element do we put the JavaScript?',
@@ -55,9 +57,7 @@ let myQuestions = [
     }
 ];
 
-localStorage.setItem('highscore', highScoreArray)
-    let savedScore = localStorage.getItem('highscore');
-    console.log(savedScore)
+
 
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) % 60;
@@ -79,7 +79,7 @@ function renderTime() {
 
 function startTimer() {
     let timerInterval = setInterval(function () {
-        
+
         timer.textContent = secondsLeft + ' seconds';
 
         if (secondsLeft <= 0) {
@@ -139,7 +139,7 @@ function checkAnswer() {
     }
     if (choice == myQuestions[pos].correctAnswer) {
         correct++;
-    }
+    } else secondsLeft -= 10;
     pos++;
 
     if (pos === myQuestions.length) {
@@ -147,43 +147,42 @@ function checkAnswer() {
         console.log('gameover');
         console.log(highscore)
     }
-    
-
-
 
     renderQuestion();
-    
-    
+}
+
+//submit buttion: 
+submitButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    //record user info
+    newUser();
+    //show highscores page
+    recordInitials.style.display = 'none';
+    document.querySelector(".leaderboard").style.display = "block";
+    document.querySelector(".user-scores").style.display = "block";
+})
+//function that record user in local storage and pushes to html
+function newUser() {
+    let userInitial = document.querySelector("#initials").value;
+    if (userInitial === "") {
+        userInitial = "anonymous";
+    }
+
+}
+
+function finishQuiz() {
+    highscore = secondsLeft;
+    secondsLeft = 0;
+    test.innerHTML = '';
+    highScoreArray.push(highscore);
+    localStorage.setItem(userInitial, JSON.stringify(highScoreArray));
+    let savedScore = JSON.parse(localStorage.getItem('highscore'));
+    console.log(savedScore)
+
+    console.log(highScoreArray);
 }
 
 
-    
-
-    function finishQuiz() {
-        highscore = secondsLeft;
-        secondsLeft = 0;
-        test.innerHTML = '';
-        highScoreArray.push(highscore)
-        console.log(highScoreArray);
-    }
-
-
-
-
-
-    //     //stop timer if goes to highscore panel
-    //     clearInterval(timerInterval);
-    //     //hide all other pages and show highscore panel
-    //     document.querySelector(".jumbotron").style.display = "none";
-
-    //     document.querySelector(".user-scores").textContent = " ";
-    //     for (let i = 0; i< localStorage.length; i++) {
-    //         var p = document.createElement("p");
-    //         var user = localStorage.key(i);
-    //         var scores = localStorage.getItem(localStorage.key(i));
-    //         p.textContent = user + ": " + scores;
-    //         document.querySelector(".user-scores").appendChild(p);}
-    //     })
 
 
 
