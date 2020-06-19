@@ -6,6 +6,8 @@ let correct = 0;
 let test, test_status, question, choice, choices, chA, chB, chC, chD;
 let secondsLeft = 46;
 let leaderboard = document.querySelector('.leaderboard')
+let highscore = 0;
+let highScoreArray = []
 let tryAgain = document.querySelector('.again');
 let myQuestions = [
     {
@@ -18,7 +20,7 @@ let myQuestions = [
         },
         correctAnswer: 'C'
     },
-    
+
     {
         question: 'How do you write "Hello World" in an alert box?',
         answers: {
@@ -40,7 +42,7 @@ let myQuestions = [
         },
         correctAnswer: 'B'
     },
-    
+
     {
         question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
         answers: {
@@ -53,14 +55,18 @@ let myQuestions = [
     }
 ];
 
+localStorage.setItem('highscore', highScoreArray)
+    let savedScore = localStorage.getItem('highscore');
+    console.log(savedScore)
+
 function getFormattedSeconds() {
-    let secondsLeft = (totalSeconds - secondsElapsed) %60;
+    let secondsLeft = (totalSeconds - secondsElapsed) % 60;
 
     let formattedSeconds;
 
     if (secondsLeft < 10) {
         formattedSeconds = '0' + secondsLeft;
-    }else {
+    } else {
         formattedSeconds = secondsLeft;
     }
 
@@ -72,19 +78,21 @@ function renderTime() {
 
 
 function startTimer() {
-    let timerInterval = setInterval(function() {
-        secondsLeft -- ;
-        timer.textContent =  secondsLeft + ' seconds';
+    let timerInterval = setInterval(function () {
+        
+        timer.textContent = secondsLeft + ' seconds';
 
-        if (secondsLeft === 0) {
+        if (secondsLeft <= 0) {
             clearInterval(timerInterval);
-            test.innerHTML = '<h1> Sorry, you ran out of time';
+            test.innerHTML = '<h1> Game Over!';
+        } else {
+            secondsLeft--;
         }
     }, 1000);
 };
 startQuizBtn.addEventListener('click', startTimer);
 startQuizBtn.addEventListener('click', renderQuestion);
-startQuizBtn.addEventListener('click', function() {
+startQuizBtn.addEventListener('click', function () {
     document.querySelector('.jumbotron').style.display = "none";
 })
 
@@ -95,62 +103,87 @@ function get(x) {
 function renderQuestion() {
     test = get('test');
     if (pos >= myQuestions.length) {
-        test.innerHTML = '<h2>You got ' + correct + ' of ' + myQuestions.length + 'questions correct</h2>';
+        test.innerHTML = '<h2>You got ' + correct + ' of ' + myQuestions.length + ' questions correct</h2>';
         get('test_status').innerHTML = 'Test Completed';
         pos = 0;
         correct = 0;
         return false;
     }
 
-    get('test_status').innerHTML = 'Question ' + (pos+1) +' of ' + myQuestions.length;
-    
-    question = myQuestions [pos].question;
-    chA = myQuestions [pos].answers.a;
-    chB = myQuestions [pos].answers.b;
-    chC = myQuestions [pos].answers.c;
-    chD = myQuestions [pos].answers.d;
-    //JSON.stringify(answers);
-console.log(chA);
-    
+    get('test_status').innerHTML = 'Question ' + (pos + 1) + ' of ' + myQuestions.length;
+
+    question = myQuestions[pos].question;
+    chA = myQuestions[pos].answers.a;
+    chB = myQuestions[pos].answers.b;
+    chC = myQuestions[pos].answers.c;
+    chD = myQuestions[pos].answers.d;
+
+    console.log(chA);
+
 
     test.innerHTML = '<h3>' + question + '</h3>';
 
-    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "A"> '+ chA +'</label><br>';
-    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "B"> '+ chB +'</label><br>';
-    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "C"> '+ chC +'</label><br>';
-    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "D"> '+ chD +'</label><br><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "A"> ' + chA + '</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "B"> ' + chB + '</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "C"> ' + chC + '</label><br>';
+    test.innerHTML += '<label> <input type = "radio" name = "choices" value = "D"> ' + chD + '</label><br><br>';
     test.innerHTML += '<button onclick = "checkAnswer()" >Submit Answer</button>';
 }
 
-    function checkAnswer() {
-        choices = document.getElementsByName('choices');
-        for (var i=0; i < choices.length; i++) {
-            if (choices[i].checked) {
-                choice = choices[i].value;
-            }
+function checkAnswer() {
+    choices = document.getElementsByName('choices');
+    for (var i = 0; i < choices.length; i++) {
+        if (choices[i].checked) {
+            choice = choices[i].value;
         }
-        if (choice == myQuestions[pos].correctAnswer) {
-            correct++;
-        }   
-        pos++;
+    }
+    if (choice == myQuestions[pos].correctAnswer) {
+        correct++;
+    }
+    pos++;
 
-        renderQuestion();
+    if (pos === myQuestions.length) {
+        finishQuiz();
+        console.log('gameover');
+        console.log(highscore)
+    }
+    
+
+
+
+    renderQuestion();
+    
+    
+}
+
+
+    
+
+    function finishQuiz() {
+        highscore = secondsLeft;
+        secondsLeft = 0;
+        test.innerHTML = '';
+        highScoreArray.push(highscore)
+        console.log(highScoreArray);
     }
 
-    leaderboard.addEventListener("click", function(){
-        //stop timer if goes to highscore panel
-        clearInterval(timerInterval);
-        //hide all other pages and show highscore panel
-        document.querySelector(".jumbotron").style.display = "none";
-    
-        document.querySelector(".user-scores").textContent = " ";
-        for (let i = 0; i< localStorage.length; i++) {
-            var p = document.createElement("p");
-            var user = localStorage.key(i);
-            var scores = localStorage.getItem(localStorage.key(i));
-            p.textContent = user + ": " + scores;
-            document.querySelector(".user-scores").appendChild(p);}
-        })
+
+
+
+
+    //     //stop timer if goes to highscore panel
+    //     clearInterval(timerInterval);
+    //     //hide all other pages and show highscore panel
+    //     document.querySelector(".jumbotron").style.display = "none";
+
+    //     document.querySelector(".user-scores").textContent = " ";
+    //     for (let i = 0; i< localStorage.length; i++) {
+    //         var p = document.createElement("p");
+    //         var user = localStorage.key(i);
+    //         var scores = localStorage.getItem(localStorage.key(i));
+    //         p.textContent = user + ": " + scores;
+    //         document.querySelector(".user-scores").appendChild(p);}
+    //     })
 
 
 
