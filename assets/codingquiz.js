@@ -11,10 +11,10 @@ let myQuestions = [
     {
         question: 'In which HTML element do we put the JavaScript?',
         answers: {
-            a: '<div>',
-            b: '<href>',
-            c: '<script>',
-            d: '<javascript>',
+            a: '&lt;div&gt;',
+            b: '&lt;href&gt;',
+            c: '&lt;script&gt;',
+            d: '&lt;javascript&gt;',
         },
         correctAnswer: 'C'
     },
@@ -44,10 +44,10 @@ let myQuestions = [
     {
         question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
         answers: {
-            a: '<script href="xxx.js">',
-            b: '<script name="xxx.js">',
-            c: '<script src="xxx.js">',
-            d: '<script a="xxx.js">',
+            a: '&lt;script href="xxx.js"&gt;',
+            b: '&lt;script name="xxx.js"&gt;',
+            c: '&lt;script src="xxx.js"&gt;',
+            d: '&lt;script a="xxx.js"&gt;',
         },
         correctAnswer: 'C'
     }
@@ -103,14 +103,15 @@ function renderQuestion() {
     }
 
     get('test_status').innerHTML = 'Question ' + (pos+1) +' of ' + myQuestions.length;
-
-    question = myQuestions [pos].question;
-    chA = myQuestions [pos].answers;
-    chB = myQuestions [pos].b;
-    chC = myQuestions [pos].c;
-    chD = myQuestions [pos].d;
     
+    question = myQuestions [pos].question;
+    chA = myQuestions [pos].answers.a;
+    chB = myQuestions [pos].answers.b;
+    chC = myQuestions [pos].answers.c;
+    chD = myQuestions [pos].answers.d;
     //JSON.stringify(answers);
+console.log(chA);
+    
 
     test.innerHTML = '<h3>' + question + '</h3>';
 
