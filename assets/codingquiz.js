@@ -11,6 +11,7 @@ let highScoreArray = [];
 let tryAgain = document.querySelector('.again');
 let submitButton = document.querySelector('.submit');
 let recordInitials = document.querySelector('.record-initials');
+let recordScoreBtn = document.getElementById('score');
 let myQuestions = [
     {
         question: 'In which HTML element do we put the JavaScript?',
@@ -57,6 +58,8 @@ let myQuestions = [
     }
 ];
 
+recordInitials.style.display = 'none';
+recordScoreBtn.style.display = 'none';
 
 
 function getFormattedSeconds() {
@@ -94,6 +97,9 @@ startQuizBtn.addEventListener('click', startTimer);
 startQuizBtn.addEventListener('click', renderQuestion);
 startQuizBtn.addEventListener('click', function () {
     document.querySelector('.jumbotron').style.display = "none";
+})
+recordScoreBtn.addEventListener('click', function() {
+    document.querySelector('.record-initials').style.display = 'block';
 })
 
 function get(x) {
@@ -154,13 +160,13 @@ function checkAnswer() {
 //submit buttion: 
 submitButton.addEventListener('click', function (event) {
     event.preventDefault();
+
     //record user info
     newUser();
     //show highscores page
-    recordInitials.style.display = 'none';
-    document.querySelector(".leaderboard").style.display = "block";
-    document.querySelector(".user-scores").style.display = "block";
+    document.querySelector('').style.display = "block";
 })
+
 //function that record user in local storage and pushes to html
 function newUser() {
     let userInitial = document.querySelector("#initials").value;
@@ -174,6 +180,7 @@ function finishQuiz() {
     highscore = secondsLeft;
     secondsLeft = 0;
     test.innerHTML = '';
+    recordScoreBtn.style.display = 'block';
     highScoreArray.push(highscore);
     localStorage.setItem(userInitial, JSON.stringify(highScoreArray));
     let savedScore = JSON.parse(localStorage.getItem('highscore'));
