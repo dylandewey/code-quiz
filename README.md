@@ -11,3 +11,7 @@ I put my questions into an array and then called them in a function called rende
 
 My timer function is set for 45 seconds.  Each incorrect answer subtracts 10 seconds from the clock.  
 
+<img alt="code-quiz" src="./assets/page1.jpeg" width="500">
+<img alt="questions" src="./assets/page2.jpeg" width="500">
+<img alt="gameover" src="./assets/page3.jpeg" width="500">
+<img alt="initials" src="./assets/page4.jpeg" width="500">
