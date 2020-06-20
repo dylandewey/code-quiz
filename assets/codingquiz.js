@@ -12,6 +12,8 @@ let tryAgain = document.querySelector('.again');
 let submitButton = document.querySelector('.submit');
 let recordInitials = document.querySelector('.record-initials');
 let recordScoreBtn = document.getElementById('score');
+
+// array of questions 
 let myQuestions = [
     {
         question: 'In which HTML element do we put the JavaScript?',
@@ -58,10 +60,11 @@ let myQuestions = [
     }
 ];
 
+// Hides the initials form and record score button until game is over 
 recordInitials.style.display = 'none';
 recordScoreBtn.style.display = 'none';
 
-
+// Timer 
 function getFormattedSeconds() {
     let secondsLeft = (totalSeconds - secondsElapsed) % 60;
 
@@ -79,7 +82,6 @@ function renderTime() {
     secondsDisplay.textContent = getFormattedSeconds();
 }
 
-
 function startTimer() {
     let timerInterval = setInterval(function () {
 
@@ -93,19 +95,23 @@ function startTimer() {
         }
     }, 1000);
 };
+
+// Event listeners to start the game, the timer, and hide instructions 
 startQuizBtn.addEventListener('click', startTimer);
 startQuizBtn.addEventListener('click', renderQuestion);
 startQuizBtn.addEventListener('click', function () {
     document.querySelector('.jumbotron').style.display = "none";
 })
-recordScoreBtn.addEventListener('click', function() {
+recordScoreBtn.addEventListener('click', function () {
     document.querySelector('.record-initials').style.display = 'block';
 })
+
 
 function get(x) {
     return document.getElementById(x);
 }
 
+// The function that makes the questions appear and go through all questions 
 function renderQuestion() {
     test = get('test');
     if (pos >= myQuestions.length) {
@@ -118,6 +124,7 @@ function renderQuestion() {
 
     get('test_status').innerHTML = 'Question ' + (pos + 1) + ' of ' + myQuestions.length;
 
+    // This makes the multiple choices show up on the screen for each question 
     question = myQuestions[pos].question;
     chA = myQuestions[pos].answers.a;
     chB = myQuestions[pos].answers.b;
@@ -136,6 +143,7 @@ function renderQuestion() {
     test.innerHTML += '<button onclick = "checkAnswer()" >Submit Answer</button>';
 }
 
+// This function checks the answer for each question 
 function checkAnswer() {
     choices = document.getElementsByName('choices');
     for (var i = 0; i < choices.length; i++) {
@@ -154,6 +162,7 @@ function checkAnswer() {
         console.log(highscore)
     }
 
+    // Takes user to the next question 
     renderQuestion();
 }
 
@@ -173,9 +182,11 @@ function newUser() {
     if (userInitial === "") {
         userInitial = "anonymous";
     }
+    
 
 }
 
+// Ends the quiz, the user can then record score and initials
 function finishQuiz() {
     highscore = secondsLeft;
     secondsLeft = 0;

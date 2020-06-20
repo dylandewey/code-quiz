@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
   <body>
+  
+   <!-- Navbar incluces the leaderboard and the timer  -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       <a class="navbar-brand" href="leaderboard.html">Leaderboard</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +26,7 @@
       </div>
     </nav>
 
+    <!-- This is the opening page for the quiz with instructions and the start button -->
       <div class="jumbotron">
         <h1 class="display-4">JavaScript Quiz!</h1>
         <p class="lead">How much do you know about the basics of JavaScript?  Answer the following myQuestions and find out.  Each wrong 
@@ -37,10 +40,11 @@
       <h2 id='test_status'></h2>
       <div id='test'></div>
 
+<!-- Record score button when game is finished gives user a form to input their intials  -->
 <button type="button" name="score" id="score" class="btn btn-primary" btn-lg btn-block>Record Score</button>
 
-      <!-- Initials Section - user is taken to this section when quiz is done to record name and score -->
-  <div class="record-initials" id="record-initials">
+<!-- Initials - when the game is over the user clicks record scores and enters their initials  -->
+<div class="record-initials" id="record-initials">
     <div class="row margin justify-content-center">
       <div class="col-md-6">
         <h3>Quiz Complete!</h3>
