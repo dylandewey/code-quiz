@@ -9,9 +9,10 @@ let leaderboard = document.querySelector('leaderboard.html')
 let highscore = 0;
 let highScoreArray = [];
 let tryAgain = document.querySelector('.again');
-let submitButton = document.querySelector('.submit');
+let submitButton = document.querySelector('.submit-btn');
 let recordInitials = document.querySelector('.record-initials');
 let recordScoreBtn = document.getElementById('score');
+let userInitial = 'anonymous';
 
 // array of questions 
 let myQuestions = [
@@ -178,9 +179,9 @@ submitButton.addEventListener('click', function (event) {
 
 //function that record user in local storage and pushes to html
 function newUser() {
-    let userInitial = document.querySelector("#initials").value;
-    if (userInitial === "") {
-        userInitial = "anonymous";
+     let initials = document.getElementById("#initials").value;
+    if (initials !== "") {
+        userInitial = initials;
     }
     
 
@@ -188,16 +189,22 @@ function newUser() {
 
 // Ends the quiz, the user can then record score and initials
 function finishQuiz() {
-    highscore = secondsLeft;
-    secondsLeft = 0;
+    //secondsLeft = 0;
     test.innerHTML = '';
     recordScoreBtn.style.display = 'block';
-    highScoreArray.push(highscore);
-    localStorage.setItem(userInitial, JSON.stringify(highScoreArray));
-    let savedScore = JSON.parse(localStorage.getItem('highscore'));
-    console.log(savedScore)
-
-    console.log(highScoreArray);
+    //highScoreArray.push(highscore);
+    let userObjects = {
+        'userInitial': userInitial,
+        'score' : secondsLeft
+    }
+    let userScores = localStorage.getItem('userScores'); 
+        if (userScores != null) {
+            userScores.push(userObjects);
+        } else {
+            userScores = [userObjects];
+        }
+    localStorage.setItem('userScores', userScores);
+    
 }
 
 
