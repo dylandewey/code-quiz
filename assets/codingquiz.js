@@ -157,14 +157,11 @@ function checkAnswer() {
     } else secondsLeft -= 10;
     pos++;
 
-    if (pos === myQuestions.length) {
-        finishQuiz();
-        console.log('gameover');
-        console.log(highscore)
-    }
+    
 
     // Takes user to the next question 
     renderQuestion();
+    recordScoreBtn.style.display = 'block';
 }
 
 //submit buttion: 
@@ -174,38 +171,37 @@ submitButton.addEventListener('click', function (event) {
     //record user info
     newUser();
     //show highscores page
-    document.querySelector('').style.display = "block";
+    finishQuiz();
 })
 
 //function that record user in local storage and pushes to html
 function newUser() {
-     let initials = document.getElementById("#initials").value;
+     let initials = document.getElementById("initials").value;
     if (initials !== "") {
         userInitial = initials;
     }
     
 
+
 }
 
 // Ends the quiz, the user can then record score and initials
 function finishQuiz() {
-    //secondsLeft = 0;
-    test.innerHTML = '';
-    recordScoreBtn.style.display = 'block';
+    
+    
     //highScoreArray.push(highscore);
     let userObjects = {
         'userInitial': userInitial,
         'score' : secondsLeft
     }
-    let userScores = localStorage.getItem('userScores'); 
-        if (userScores != null) {
+    let userScores = JSON.parse(localStorage.getItem('userScores') || '[]'); 
             userScores.push(userObjects);
-        } else {
-            userScores = [userObjects];
-        }
-    localStorage.setItem('userScores', userScores);
-    
+
+    localStorage.setItem('userScores', JSON.stringify(userScores));   
+
+    document.location = '/leaderboard.html';
 }
+
 
 
 
