@@ -157,13 +157,11 @@ function checkAnswer() {
     } else secondsLeft -= 10;
     pos++;
 
-    
-
     // Takes user to the next question 
     renderQuestion();
-    recordScoreBtn.style.display = 'block';
 }
-
+      recordScoreBtn.style.display = 'block';
+    
 //submit buttion: 
 submitButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -180,9 +178,6 @@ function newUser() {
     if (initials !== "") {
         userInitial = initials;
     }
-    
-
-
 }
 
 // Ends the quiz, the user can then record score and initials
@@ -199,7 +194,7 @@ function finishQuiz() {
 
     localStorage.setItem('userScores', JSON.stringify(userScores));   
 
-    document.location = '/leaderboard.html';
+    document.location = 'leaderboard.html';
 }
 
 
