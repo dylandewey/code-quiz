@@ -122,6 +122,9 @@ function renderQuestion() {
         correct = 0;
         return false;
     }
+    if (pos <= myQuestions.length) {
+        recordScoreBtn.style.display = 'block';
+    };
 
     get('test_status').innerHTML = 'Question ' + (pos + 1) + ' of ' + myQuestions.length;
 
@@ -134,7 +137,6 @@ function renderQuestion() {
 
     console.log(chA);
 
-
     test.innerHTML = '<h3>' + question + '</h3>';
 
     test.innerHTML += '<label> <input type = "radio" name = "choices" value = "A"> ' + chA + '</label><br>';
@@ -144,7 +146,7 @@ function renderQuestion() {
     test.innerHTML += '<button onclick = "checkAnswer()" >Submit Answer</button>';
 }
 
-// This function checks the answer for each question 
+// Checks the answer for each question 
 function checkAnswer() {
     choices = document.getElementsByName('choices');
     for (var i = 0; i < choices.length; i++) {
@@ -160,7 +162,7 @@ function checkAnswer() {
     // Takes user to the next question 
     renderQuestion();
 }
-      recordScoreBtn.style.display = 'block';
+      
     
 //submit buttion: 
 submitButton.addEventListener('click', function (event) {
@@ -172,7 +174,7 @@ submitButton.addEventListener('click', function (event) {
     finishQuiz();
 })
 
-//function that record user in local storage and pushes to html
+//Record user in local storage and pushes to html
 function newUser() {
      let initials = document.getElementById("initials").value;
     if (initials !== "") {
@@ -182,12 +184,11 @@ function newUser() {
 
 // Ends the quiz, the user can then record score and initials
 function finishQuiz() {
-    
-    
-    //highScoreArray.push(highscore);
     let userObjects = {
         'userInitial': userInitial,
         'score' : secondsLeft
+        
+
     }
     let userScores = JSON.parse(localStorage.getItem('userScores') || '[]'); 
             userScores.push(userObjects);
